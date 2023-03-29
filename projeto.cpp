@@ -1,6 +1,7 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -27,7 +28,7 @@ void reposicionaCursor()
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void mapaMicrobaniv()
+/*void mapaMicrobaniv(int m[10][10])
 {
 	int m[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
 					 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
@@ -39,7 +40,7 @@ void mapaMicrobaniv()
 					 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 					 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 					 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-}
+}*/
 
 void imprimeMapaPersonagem(int m[10][10], int x, int y)
 {
@@ -79,7 +80,7 @@ void imprimeMapaPersonagem(int m[10][10], int x, int y)
 	} // fim for mapa
 }
 
-int executaMovimentos(char tecla, int m[10][10], int x, int y)
+void executaMovimentos(char tecla, int m[10][10], int &x, int &y)
 {
 	if (_kbhit())
 	{
@@ -279,7 +280,6 @@ int executaMovimentos(char tecla, int m[10][10], int x, int y)
 			break;
 		}
 	} // fim do if
-	return x, y;
 }
 
 /*void funcaoWhile(int m[10][10], int x, int y)
@@ -296,3 +296,108 @@ int executaMovimentos(char tecla, int m[10][10], int x, int y)
 
 	} // fim main
 }*/
+
+void menu()
+{
+	while(1){
+		int m[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+						1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+						1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
+						1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+						1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+						1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+		// mapaMicrobaniv();
+
+		// Posi��o inicial do personagem no console
+		int x = 1, y = 4;
+		// Vari�vel para tecla precionada
+		char tecla;
+		int mapa;
+		int escolha;
+
+		naoPisca();
+		system("cls");
+		cout << "Bem vindo ao sokoban" << endl;
+		cout << "(1) Novo Jogo" << endl;
+		cout << "(2) Continuar" << endl;
+		cout << "(3) Sobre" << endl;
+		cout << "(4) Fim" << endl;
+
+		cout << "escolha: ";
+		cin >> escolha;
+
+		switch (escolha)
+		{
+		case 1:
+			system("cls");
+			cout << "Escolha o mapa" << endl
+				<< "(1) Microbaniv" << endl
+				<< "(2) Turman" << endl
+				<< "(3) Grisa" << endl;
+
+			cin >> mapa;
+			switch (mapa)
+			{
+			case 1:
+
+				cout << "voce escolheu microbaniv";
+				system("cls");
+
+				while (true)
+				{
+					/// Posiciona a escrita no início do console
+					reposicionaCursor();
+
+					imprimeMapaPersonagem(m, x, y);
+
+					executaMovimentos(tecla, m, x, y);
+				}
+				break;
+
+			case 2:
+
+				cout << "oi"<< endl;
+				break;
+
+			case 3:
+
+				cout << "oi"<< endl;
+				break;
+			} // fim do switch mapa
+
+			break; // break case 1 do switch escolha
+
+		case 2:
+
+			cout << "oi" << endl;
+			break;
+
+		case 3:
+
+			system("cls");
+			cout << "autores: " << endl
+				<< "Akerman" << endl
+				<< "Grisa" << endl
+				<< "Turman" << endl
+				<< "Professor: Felski" << endl;
+			cout << "Regras: Jogue e descubra" << endl
+				<< "minto so empurre todas as caixas nas bolinhas, simples não?";
+			break;
+
+		case 4:
+
+			exit(0);
+			break;
+
+		default:
+
+			cout << "opcao invalida, tente novamente" << endl;
+			break;
+		} // fim switch1
+	}//fim while
+}
