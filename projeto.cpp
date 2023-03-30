@@ -28,20 +28,6 @@ void reposicionaCursor()
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-/*void mapaMicrobaniv(int m[10][10])
-{
-	int m[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-					 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
-					 1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
-					 1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
-					 1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-					 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-					 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-}*/
-
 void imprimeMapaPersonagem(int m[10][10], int x, int y)
 {
 	/// Imprime o jogo: mapa e personagem.
@@ -282,7 +268,19 @@ void executaMovimentos(char tecla, int m[10][10], int &x, int &y)
 	} // fim do if
 }
 
-/*void funcaoWhile(int m[10][10], int x, int y)
+void matrizMaker(int m[10][10], int matriz[10][10])
+{
+	for (int i = 0; i <= 10; i++)
+	{
+		for (int j = 0; j <= 10; j++)
+		{
+			m[i][j] = matriz[i][j];
+		}
+	}
+}
+
+
+void funcaoWhile(char tecla, int m[10][10], int x, int y)
 {
 	while (true)
 	{
@@ -292,33 +290,55 @@ void executaMovimentos(char tecla, int m[10][10], int &x, int &y)
 		/// Imprime o jogo: mapa e personagem.
 		imprimeMapaPersonagem(m, x, y);
 
-		executaMovimentos(m, x, y);
+		executaMovimentos(tecla, m, x, y);
 
 	} // fim main
-}*/
+}
 
 void menu()
 {
-	while(1){
-		int m[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-						1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
-						1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
-						1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
-						1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-						1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-						0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	while (1)
+	{
+		int m1[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+						  1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+						  1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
+						  1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+						  1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+						  1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-		// mapaMicrobaniv();
+		int m2[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+						  1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+						  1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
+						  1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+						  1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+						  1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-		// Posi��o inicial do personagem no console
-		int x = 1, y = 4;
+		int m3[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+						  1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+						  1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
+						  1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+						  1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+						  1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 		// Vari�vel para tecla precionada
 		char tecla;
 		int mapa;
 		int escolha;
+		int m[10][10];
+		int x;
+		int y;
 
 		naoPisca();
 		system("cls");
@@ -336,37 +356,38 @@ void menu()
 		case 1:
 			system("cls");
 			cout << "Escolha o mapa" << endl
-				<< "(1) Microbaniv" << endl
-				<< "(2) Turman" << endl
-				<< "(3) Grisa" << endl;
+				 << "(1) Microbaniv" << endl
+				 << "(2) Turman" << endl
+				 << "(3) Grisa" << endl;
 
 			cin >> mapa;
 			switch (mapa)
 			{
 			case 1:
 
-				cout << "voce escolheu microbaniv";
 				system("cls");
-
-				while (true)
-				{
-					/// Posiciona a escrita no início do console
-					reposicionaCursor();
-
-					imprimeMapaPersonagem(m, x, y);
-
-					executaMovimentos(tecla, m, x, y);
-				}
+				matrizMaker(m, m1);
+				x = 1; // posicao inicial do personagem no console
+				y = 4; // Posicaoo inicial do personagem no console
+				funcaoWhile(tecla, m, x, y);
 				break;
 
 			case 2:
 
-				cout << "oi"<< endl;
+				system("cls");
+				matrizMaker(m, m2);
+				x = 1; // posicao inicial do personagem no console
+				y = 4; // Posicaoo inicial do personagem no console
+				funcaoWhile(tecla, m, x, y);
 				break;
 
 			case 3:
 
-				cout << "oi"<< endl;
+				system("cls");
+				matrizMaker(m, m3);
+				x = 1; // posicao inicial do personagem no console
+				y = 4; // Posicaoo inicial do personagem no console
+				funcaoWhile(tecla, m, x, y);
 				break;
 			} // fim do switch mapa
 
@@ -381,12 +402,12 @@ void menu()
 
 			system("cls");
 			cout << "autores: " << endl
-				<< "Akerman" << endl
-				<< "Grisa" << endl
-				<< "Turman" << endl
-				<< "Professor: Felski" << endl;
+				 << "Akerman" << endl
+				 << "Grisa" << endl
+				 << "Turman" << endl
+				 << "Professor: Felski" << endl;
 			cout << "Regras: Jogue e descubra" << endl
-				<< "minto so empurre todas as caixas nas bolinhas, simples não?";
+				 << "minto so empurre todas as caixas nas bolinhas, simples não?";
 			break;
 
 		case 4:
@@ -399,5 +420,5 @@ void menu()
 			cout << "opcao invalida, tente novamente" << endl;
 			break;
 		} // fim switch1
-	}//fim while
+	}	  // fim while
 }
