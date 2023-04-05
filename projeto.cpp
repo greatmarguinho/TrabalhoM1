@@ -5,6 +5,9 @@
 
 using namespace std;
 
+#define COL 10
+#define LIN 10
+
 void naoPisca()
 {
 	/// ALERTA: N�O MODIFICAR O TRECHO DE C�DIGO, A SEGUIR.
@@ -28,12 +31,12 @@ void reposicionaCursor()
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void imprimeMapaPersonagem(int m[10][10], int x, int y)
+void imprimeMapaPersonagem(int m[LIN][COL], int x, int y)
 {
 	/// Imprime o jogo: mapa e personagem.
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < LIN; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j < COL; j++)
 		{
 			if (i == x && j == y)
 			{
@@ -66,7 +69,7 @@ void imprimeMapaPersonagem(int m[10][10], int x, int y)
 	} // fim for mapa
 }
 
-void executaMovimentos(char tecla, int m[10][10], int &x, int &y)
+void executaMovimentos(char tecla, int m[LIN][COL], int &x, int &y, bool &pausa)
 {
 	if (_kbhit())
 	{
@@ -264,24 +267,49 @@ void executaMovimentos(char tecla, int m[10][10], int &x, int &y)
 				break;
 			}
 			break;
+
+		case 'l':
+			pausa = true;
 		}
 	} // fim do if
 }
 
-void matrizMaker(int m[10][10], int matriz[10][10])
+void matrizMaker(int m[LIN][COL], int matriz[LIN][COL])
 {
-	for (int i = 0; i <= 10; i++)
+	for (int i = 0; i < LIN; i++)
 	{
-		for (int j = 0; j <= 10; j++)
+		for (int j = 0; j < COL; j++)
 		{
 			m[i][j] = matriz[i][j];
 		}
 	}
 }
 
-
-void funcaoWhile(char tecla, int m[10][10], int x, int y)
+int verificaGanhou(int m[LIN][COL], int caixasCertas)
 {
+	int contaCaixasCertas = 0;
+	for (int i = 0; i < LIN; i++)
+	{
+		for (int j = 0; j < COL; j++)
+		{
+			if (m[i][j] == 5)
+			{
+				contaCaixasCertas++;
+			}
+		}
+	}
+	if (caixasCertas == contaCaixasCertas)
+	{
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+void funcaoWhile(char tecla, int m[LIN][COL], int &x, int &y, int caixasCertas, bool &pausa)
+{
+
+	system("cls");
 	while (true)
 	{
 		/// Posiciona a escrita no início do console
@@ -289,9 +317,15 @@ void funcaoWhile(char tecla, int m[10][10], int x, int y)
 
 		/// Imprime o jogo: mapa e personagem.
 		imprimeMapaPersonagem(m, x, y);
-
-		executaMovimentos(tecla, m, x, y);
-
+		if(verificaGanhou(m, caixasCertas) == 1){
+			cout << "VOCE GANHOU!" << endl;
+			system("pause");
+			break;
+		}
+		if(pausa == true){
+			break;
+		}
+		executaMovimentos(tecla, m, x, y, pausa);
 	} // fim main
 }
 
@@ -299,46 +333,50 @@ void menu()
 {
 	while (1)
 	{
-		int m1[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-						  1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
-						  1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
-						  1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
-						  1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-						  1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		int m1[LIN][COL] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+							1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+							1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
+							1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+							1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+							1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-		int m2[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-						  1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
-						  1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
-						  1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
-						  1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-						  1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		int m2[LIN][COL] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+							1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+							1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
+							1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+							1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+							1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-		int m3[10][10] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-						  1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
-						  1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
-						  1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
-						  1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-						  1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						  0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		int m3[LIN][COL] = {0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+							1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
+							1, 0, 0, 3, 5, 4, 0, 1, 0, 0,
+							1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+							1, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+							1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 		// Vari�vel para tecla precionada
 		char tecla;
+		// Outras variaveis
 		int mapa;
 		int escolha;
-		int m[10][10];
+		int m[LIN][COL];
 		int x;
 		int y;
+		bool pausa;
+		int caixasCertas;
+		char resposta;
 
 		naoPisca();
 		system("cls");
@@ -354,40 +392,54 @@ void menu()
 		switch (escolha)
 		{
 		case 1:
+			if(pausa == true){
+				cout << "voce tem um jogo em andamento, tem certeza que quer iniciar um novo jogo?(s/n)" << endl;
+				cin >> resposta;
+				if(resposta == 's'){
+					pausa = false;
+				}else{
+					break;
+				}
+			}
 			system("cls");
 			cout << "Escolha o mapa" << endl
 				 << "(1) Microbaniv" << endl
 				 << "(2) Turman" << endl
-				 << "(3) Grisa" << endl;
+				 << "(3) Grisa" << endl
+				 << "(4) voltar menu" << endl;
 
 			cin >> mapa;
 			switch (mapa)
 			{
 			case 1:
 
-				system("cls");
-				matrizMaker(m, m1);
-				x = 1; // posicao inicial do personagem no console
-				y = 4; // Posicaoo inicial do personagem no console
-				funcaoWhile(tecla, m, x, y);
+				matrizMaker(m, m1); // m recebe os valores de m1;
+				x = 1;				// posicao inicial do personagem no console
+				y = 4;				// Posicaoo inicial do personagem no console
+				caixasCertas = 2;	// Esse numero precisa ser igual ao numero de caixas corretas presente no mapa
+				funcaoWhile(tecla, m, x, y, caixasCertas, pausa);
 				break;
 
 			case 2:
 
-				system("cls");
-				matrizMaker(m, m2);
-				x = 1; // posicao inicial do personagem no console
-				y = 4; // Posicaoo inicial do personagem no console
-				funcaoWhile(tecla, m, x, y);
+				matrizMaker(m, m2); // faz m2 ser m;
+				x = 1;				// posicao inicial do personagem no console
+				y = 4;				// Posicaoo inicial do personagem no console
+				caixasCertas = 2;	// Esse numero precisa ser igual ao numero de caixas corretas presente no mapa
+				funcaoWhile(tecla, m, x, y, caixasCertas, pausa);
 				break;
 
 			case 3:
 
-				system("cls");
-				matrizMaker(m, m3);
-				x = 1; // posicao inicial do personagem no console
-				y = 4; // Posicaoo inicial do personagem no console
-				funcaoWhile(tecla, m, x, y);
+				matrizMaker(m, m3); // faz m3 ser m;
+				x = 1;				// posicao inicial do personagem no console
+				y = 4;				// Posicaoo inicial do personagem no console
+				caixasCertas = 2;	// Esse numero precisa ser igual ao numero de caixas corretas presente no mapa
+				funcaoWhile(tecla, m, x, y, caixasCertas, pausa);
+				break;
+
+			case 4:
+
 				break;
 			} // fim do switch mapa
 
@@ -395,7 +447,17 @@ void menu()
 
 		case 2:
 
-			cout << "oi" << endl;
+			if (pausa == true)
+			{
+				pausa = false;
+				funcaoWhile(tecla, m, x, y, caixasCertas, pausa);
+			}
+			else
+			{
+				cout << "voce precisa fazer um novo jogo antes de usar a opcao continuar" << endl;
+				system("pause");
+			}
+
 			break;
 
 		case 3:
@@ -406,8 +468,9 @@ void menu()
 				 << "Grisa" << endl
 				 << "Turman" << endl
 				 << "Professor: Felski" << endl;
-			cout << "Regras: Jogue e descubra" << endl
-				 << "minto so empurre todas as caixas nas bolinhas, simples não?";
+			cout << "Regras: Jogue e descubra." << endl
+				 << "Minto, so empurre todas as caixas nas bolinhas, simples nao?" << endl;
+			system("pause");
 			break;
 
 		case 4:
@@ -417,8 +480,8 @@ void menu()
 
 		default:
 
-			cout << "opcao invalida, tente novamente" << endl;
+			cout << "opcao invalida, reinicie o jogo" << endl;
 			break;
-		} // fim switch1
+		} // fim switch escolha
 	}	  // fim while
 }
